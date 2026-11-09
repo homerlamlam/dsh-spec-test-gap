@@ -1,6 +1,8 @@
 # 离线 Agent 审查契约（schema 1）
 
-SpecGap 冻结输入并核对引用；coding agent 或人工负责**语义判断**。JSON 合法、引文存在仍然可能判断错误。
+dsh-spec-test-gap（需求与代码双向对照测试助手）冻结输入并核对引用；coding agent 或人工负责**语义判断**。JSON 合法、引文存在仍然可能判断错误。
+
+CLI/core 仍为 **0.1.0**，Python 模块/CLI 命令 `specgap` 及数据/API 命名空间 `specgap` 是兼容内部标识；公开品牌更名不改变以下命令或 schema。本工具不是自动测试运行器。
 
 ## 材料和安全
 

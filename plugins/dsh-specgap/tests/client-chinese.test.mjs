@@ -52,6 +52,11 @@ test('attempt errors and environment capabilities have Chinese explanations, not
  const tree=render('Workbench',{},[{...client,getSnapshot:()=>current},'new']);
  assert.ok(prose(tree).includes('工作区注册'));assert.ok(prose(tree).includes('模型调用'));assert.equal(prose(tree).includes('workspaceRegistry'),false);assert.equal(prose(tree).includes('ENVIRONMENT'),false);
 });
+test('workbench heading follows the localized navigation label instead of a stale hardcoded brand',()=>{
+ const label='dsh-spec-test-gap';
+ const tree=render('Workbench',{t:key=>key==='panel'?label:t(key)},[client,'new']);
+ assert.equal(text(nodes(tree).find(node=>node.type==='h1')),label);
+});
 test('Chinese report reader isolates legacy English but keeps native Chinese and English locale readable',()=>{
  const markdown='# Legacy review report\n\nThe owner check is missing.\n\n| Actor | Result |\n| --- | --- |\n| Alex | passed |\n\n```py\nreturn True\n```';
  const tree=render('SafeMarkdown',{markdown});assert.equal(prose(tree).includes('Legacy review report'),false);assert.equal(prose(tree).includes('The owner check is missing.'),false);assert.ok(text(tree).includes('The owner check is missing.'));assert.ok(codeBlocks(tree).includes('return True'));assert.ok(prose(tree).includes('原文（未翻译）'));

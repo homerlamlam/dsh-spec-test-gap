@@ -1,16 +1,20 @@
-# 独立 CLI 使用
+# dsh-spec-test-gap 独立 CLI 使用
 
 [项目首页](<../README.md>) · [Agent 审查契约](<agent-contract.md>)
 
-CLI/core 版本为 **0.1.0**，与插件版本独立。要求 Python 3.11+、Git 2.31+；运行时没有第三方 Python 依赖。
+**需求与代码双向对照测试助手** 的 CLI/core 版本仍为 **0.1.0**，与插件 **0.2.0-alpha.5** 独立。Python 模块、CLI 命令、数据/API 命名空间 `specgap` 都是保留的兼容内部标识，不随公开品牌更名；不要将 `specgap` 命令改为 `dsh-spec-test-gap`。
+
+要求 Python 3.11+、Git 2.31+；运行时没有第三方 Python 依赖。它不是自动测试运行器，也不提供发布批准。
 
 ## 安装与预设样例
 
-在源码根目录安装；构建工具可能需要联网下载。已有 setuptools >=68 时可使用离线方式。
+从公开仓库克隆后在源码根目录安装；这是源码安装，本次不发布到 PyPI。构建工具可能需要联网下载；已有 setuptools >=68 时可选择下面的离线安装命令（两种安装方式择一）。
 
 ```sh
+git clone https://github.com/homerlamlam/dsh-spec-test-gap.git
+cd dsh-spec-test-gap
 python -m pip install -e .
-# Offline alternative when build tools are already present:
+# 已有构建工具时，可用以下离线命令替代上一行：
 python -m pip install --no-index --no-deps --no-build-isolation -e .
 python -m specgap --help
 python -m specgap demo --out ../specgap-demo

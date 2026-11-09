@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 from specgap.errors import SpecGapError
-from specgap.util import canonical_hash, physical_lines, read_json, safe_text, strict_loads, write_json
+from specgap.util import canonical_hash, physical_lines, read_json, safe_path, safe_text, strict_loads, write_json
 
 
 class UtilTests(unittest.TestCase):
@@ -40,6 +40,20 @@ class UtilTests(unittest.TestCase):
                                ('a\u2028b\u2029c\fd\x85e', ['a\u2028b\u2029c\fd\x85e'])]:
             with self.subTest(text=repr(text)):
                 self.assertEqual(physical_lines(text), expected)
+
+    @unittest.skipUnless(sys.platform == 'win32', 'Windows short-path aliases only')
+    def test_short_path_alias_is_canonical_before_output_boundary_checks(self):
+        import ctypes
+
+        with tempfile.TemporaryDirectory(prefix='specgap-long-path-') as tmp:
+            root = Path(tmp).resolve()
+            buffer = ctypes.create_unicode_buffer(32768)
+            length = ctypes.windll.kernel32.GetShortPathNameW(str(root), buffer, len(buffer))
+            if not length or length >= len(buffer) or Path(buffer.value) == root:
+                self.skipTest('8.3 short-path alias unavailable on this volume')
+            alias = Path(buffer.value)
+            self.assertEqual(safe_path(alias / 'reports' / 'run'), root / 'reports' / 'run')
+            self.assertFalse((root / 'reports').exists())
 
     def test_markup_is_not_executable_or_a_live_link(self):
         result = safe_text('<script>alert(1)</script>\n[click](https://evil.test)\n```\n# fake')

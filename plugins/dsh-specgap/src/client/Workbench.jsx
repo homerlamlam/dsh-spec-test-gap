@@ -43,7 +43,7 @@ export function Workbench({t,back,openReport,initialSelection,onSelectionChange}
   const selectionKey=JSON.stringify(state.selection),busy=Object.entries(state.busy).filter(([,v])=>v).map(([k])=>k),m=state.mutation;
   const locked=!!m||state.foreignPending,view=state.view;
   return <section className="specgap" aria-labelledby="specgap-title">
-    <header className="sg-header"><div className="sg-brand"><span className="sg-brand-mark" aria-hidden="true">S</span><div><h1 id="specgap-title">SpecGap</h1><span className="sg-muted">{t('workbenchLabel')}</span></div></div>
+    <header className="sg-header"><div className="sg-brand"><span className="sg-brand-mark" aria-hidden="true">S</span><div><h1 id="specgap-title">{t('panel')}</h1><span className="sg-muted">{t('workbenchLabel')}</span></div></div>
       <div className="sg-header-context"><Field label={t('workspace')}><select value={workspaceId} onChange={e=>{client.select({workspaceId:e.target.value});setPage('new');}}><option value="">{t('choose')}</option>{workspaceId&&!workspace&&<option value={workspaceId}>{workspaceId} · {t('unavailable')}</option>}{data?.workspaces.map(w=><option key={w.id} value={w.id}>{w.title||w.id}</option>)}</select></Field></div>
       <button onClick={back}>{t('back')}</button>
     </header>

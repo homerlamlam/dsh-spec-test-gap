@@ -1,14 +1,18 @@
-# SpecGap DSH 插件 · 安装与使用
+# dsh-spec-test-gap DSH 插件 · 安装与使用
 
-[项目首页](https://github.com/homerlamlam/specgap) · [验证与手工验收](<dsh-plugin-verification.md>)
+**需求与代码双向对照测试助手**
 
-候选版本 **@specgap/dsh-plugin 0.2.0-alpha.4** 增加需求出处与冻结代码阅读，仍是本地实验版。
+[项目首页](https://github.com/homerlamlam/dsh-spec-test-gap) · [验证与手工验收](<dsh-plugin-verification.md>)
+
+**dsh-spec-test-gap 0.2.0-alpha.5** 是首次正式公开预发布：公开仓库、插件包与界面展示名统一更名，保留需求出处与冻结代码阅读等既有能力，仍是本地实验版。alpha.4 仅有公开源码标签，无正式 Release，未公开分发对应安装包。
 
 **查看来源：** 问题的需求关联、需求映射与变更映射均显示原文路径/行号，点击「查看冻结原文」可定位高亮。代码证据可展开前后各十行，或点击「查看冻结全文」按每页 200 行浏览；「定位引用行」返回引用，「关闭原文」回到入口。文件来自审查冻结副本，展示对应基线/分支的提交与内容哈希，不读取当前工作树，也不伪造远程链接。旧记录只要包含完整来源即可使用；来源缺失或不匹配时保留引用并提示。链接仅用于审查内部导航，不是跨会话分享地址。
 
 新增示例的需求、问题、测试建议与演示回复，以及报告标题、状态和说明统一中文。模型请求明确约束人类可读字段使用简体中文，但未实际调用提供方验证语言遵循效果。代码引用、机器字段及历史记录不翻译覆盖；需要保留的非中文原文在代码块中展示。升级后重新创建离线示例即可体验，不会自动重写旧示例。
 
-独立 Python CLI 仍为 **0.1.0**，协议仍为 **1**。这是 GitHub 实验性预发布，不是自动发布批准。源码/打包测试、实际界面操作与模型有效性是不同的验证层次；公开结果见[验证说明](https://github.com/homerlamlam/specgap/blob/main/docs/verification.md)。
+独立 Python CLI/core 仍为 **0.1.0**，协议仍为 **1**。Python 模块/CLI 命令 `specgap`、源码目录 `plugins/dsh-specgap`、数据/API 命名空间 `specgap` 是保留的兼容内部标识，不应替换为公开品牌名。这是 GitHub 实验性预发布，不是自动测试运行器或发布批准。
+
+源码/打包测试、实际界面操作与模型有效性是不同的验证层次；[本版验证记录](https://github.com/homerlamlam/dsh-spec-test-gap/blob/main/docs/verification.md)列出本次实际结果与未验证范围。[实际生产组件离线截图](https://github.com/homerlamlam/dsh-spec-test-gap/blob/main/docs/screenshots.md)来自本版离线预设 fixture，不是 AI 发现或已登录 DSH 的完整端到端验收。
 
 ## 环境、安装与升级
 
@@ -19,22 +23,24 @@
 
 ### 从 GitHub Release 安装
 
-1. 在 [0.2.0-alpha.4 预发布](https://github.com/homerlamlam/specgap/releases/tag/plugin-v0.2.0-alpha.4) 下载插件 tgz 与 SHA-256 清单，核对文件摘要。
+1. 从 [0.2.0-alpha.5 预发布](https://github.com/homerlamlam/dsh-spec-test-gap/releases/tag/plugin-v0.2.0-alpha.5) 下载 `dsh-spec-test-gap-0.2.0-alpha.5.tgz` 与 SHA-256 清单，核对文件摘要。标签为 `plugin-v0.2.0-alpha.5`。
 2. 打开现有 DSH GUI 左侧 **插件 → 添加插件**，在 **包名或地址** 输入包在 **Host 本机**的绝对路径，不输入 shell 命令或额外引号。
-3. 点击 **安装**，完成后核对名称 **@specgap/dsh-plugin**、版本 **0.2.0-alpha.4** 与兼容要求，再点 **立即启用**。只关闭对话框会留下已安装但未启用的包。
-4. 检查警告及实际激活结果，按宿主 `application`/`nextStep` 指示处理。刷新**同一已认证页面**，在导航打开 **SpecGap**，页面标题为 **SpecGap · 证据工作台**。
+3. 点击 **安装**，完成后核对名称 **dsh-spec-test-gap**、版本 **0.2.0-alpha.5** 与兼容要求，再点 **立即启用**。只关闭对话框会留下已安装但未启用的包。
+4. 检查警告及实际激活结果，按宿主 `application`/`nextStep` 指示处理。刷新**同一已认证页面**，在导航打开 **dsh-spec-test-gap**；公开展示名为 **dsh-spec-test-gap**，中文副标题为 **需求与代码双向对照测试助手**。
 
 PowerShell 校验示例（替换成自己的下载位置）：
 
 ```powershell
-Get-FileHash -LiteralPath 'C:\Downloads\specgap-dsh-plugin-0.2.0-alpha.4.tgz' -Algorithm SHA256
+Get-FileHash -LiteralPath 'C:\Downloads\dsh-spec-test-gap-0.2.0-alpha.5.tgz' -Algorithm SHA256
 ```
 
 本次不通过 npm/PyPI 发布；不要把源码仓库根地址或未发布的 npm 名称作为安装地址。不要豁免版本兼容限制，也不要批准意外安装脚本。安装影响**当前 profile 的所有会话**。
 
 ### 升级、禁用与卸载
 
-第三方本地包在当前 DSH UI 中通过**卸载旧包，再安装新包**升级；本地 tgz 没有注册表版本更新入口。先保护已有记录，按上述步骤安装新的审查包；保留旧数据不等于承诺自动迁移。
+第三方本地包在当前 DSH UI 中通过**卸载旧包，再安装新包**升级；本地 tgz 没有注册表版本更新入口。先保护已有记录，卸载旧 SpecGap 插件（`@specgap/dsh-plugin`），再按上述步骤安装 `dsh-spec-test-gap`，不要把新旧插件同时启用并指向同一数据。
+
+数据目录仍为 `data/specgap`，不要因更名删除、改名或自动清理。保留目录不等于完成备份，也不是自动迁移、完整恢复或升级兼容性的保证；报告 JSON 不是可导入备份。
 
 禁用/卸载不保证删除持久运行/审计记录，也不能撤回已发模型请求。不要自动清理 profile 数据。仅在宿主要求并经用户同意后重启；无需启动替代服务。
 
@@ -85,4 +91,4 @@ Get-FileHash -LiteralPath 'C:\Downloads\specgap-dsh-plugin-0.2.0-alpha.4.tgz' -A
 
 ## 当前版本摘要
 
-**0.2.0-alpha.4** 增加冻结需求/代码原文定位和全文阅读；包含 alpha.3 的中文内容与报告，以及 alpha.2 的三步准备、问题优先审查和原生报告侧栏。保留冻结对象、逐字证据校验、本地角色、原请求恢复、逐次外发同意与私有审计。CLI/core 与协议版本不变。完整[变更记录](https://github.com/homerlamlam/specgap/blob/main/CHANGELOG.md)。
+**0.2.0-alpha.5** 是首次正式公开预发布，公开仓库、插件包与界面展示名统一为 **dsh-spec-test-gap**；修复 Windows 8.3 短路径别名与长路径形式比较不一致导致的仓库内输出边界绕过，并增加回归。延续 alpha.4 的冻结需求/代码原文定位和全文阅读、alpha.3 的中文内容与报告，以及 alpha.2 的三步准备、问题优先审查和原生报告侧栏。保留冻结对象、逐字证据校验、本地角色、原请求恢复、逐次外发同意与私有审计；CLI/core **0.1.0** 与协议 **1** 不变。完整[变更记录](https://github.com/homerlamlam/dsh-spec-test-gap/blob/main/CHANGELOG.md)与[本版验证记录](https://github.com/homerlamlam/dsh-spec-test-gap/blob/main/docs/verification.md)分别记录版本变化与实际验证范围。

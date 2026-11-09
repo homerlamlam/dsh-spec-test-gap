@@ -11,7 +11,7 @@ export async function buildPackage(selected) {
   for(const relative of ['dist','python/specgap'])await rm(path.join(outRoot,relative),{recursive:true,force:true});
   await mkdir(path.join(outRoot,'dist'),{recursive:true});
   await build({absWorkingDir:root,entryPoints:['src/host/index.mjs','src/host/bridge.mjs'],outdir:path.join(outRoot,'dist/host'),outExtension:{'.js':'.mjs'},bundle:true,platform:'node',target:'node24',format:'esm',packages:'external'});
-  await build({absWorkingDir:root,entryPoints:['src/client/index.jsx'],outfile:path.join(outRoot,'dist/client.js'),bundle:true,platform:'browser',target:'es2022',format:'cjs',external:['react'],loader:{'.css':'text'},banner:{js:'window.__ModuleLoader__.load({id:"@specgap/dsh-plugin",factory(require){const module={exports:{}};const exports=module.exports;'},footer:{js:'return module.exports;}});'}});
+  await build({absWorkingDir:root,entryPoints:['src/client/index.jsx'],outfile:path.join(outRoot,'dist/client.js'),bundle:true,platform:'browser',target:'es2022',format:'cjs',external:['react'],loader:{'.css':'text'},banner:{js:'window.__ModuleLoader__.load({id:"dsh-spec-test-gap",factory(require){const module={exports:{}};const exports=module.exports;'},footer:{js:'return module.exports;}});'}});
   async function copyPython(from,to){await mkdir(to,{recursive:true});for(const e of await readdir(from,{withFileTypes:true})){if(e.name==='__pycache__')continue;const src=path.join(from,e.name),dst=path.join(to,e.name);if(e.isDirectory())await copyPython(src,dst);else if(e.name.endsWith('.py'))await copyFile(src,dst);}}
   await copyPython(path.resolve(root,'../../src/specgap'),path.join(outRoot,'python/specgap'));
   await copyFile(path.resolve(root,'../../LICENSE'),path.join(outRoot,'LICENSE'));

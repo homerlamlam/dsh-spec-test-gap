@@ -19,7 +19,7 @@ function keys(value,prefix='') {return Object.entries(value).flatMap(([k,v])=>v 
 export async function checkPackage(root=defaultRoot,sourceRoot=path.resolve(defaultRoot,'../../src/specgap')) {
   root=path.resolve(root);
   const pkg=JSON.parse(await readFile(path.join(root,'package.json'),'utf8'));
-  assert.equal(pkg.name,'@specgap/dsh-plugin');assert.equal(pkg.license,'MIT');
+  assert.equal(pkg.name,'dsh-spec-test-gap');assert.equal(pkg.license,'MIT');
   assert.equal(pkg.engines.dsh,'0.2.2-rc.1','only the proven DSH version is supported');
   assert.equal(pkg.engines.node,'>=24.9.0');
   assert.equal(pkg.dependencies,undefined,'no runtime npm dependencies');

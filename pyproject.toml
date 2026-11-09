@@ -18,8 +18,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/homerlamlam/specgap"
-Issues = "https://github.com/homerlamlam/specgap/issues"
+Homepage = "https://github.com/homerlamlam/dsh-spec-test-gap"
+Issues = "https://github.com/homerlamlam/dsh-spec-test-gap/issues"
 
 [project.scripts]
 specgap = "specgap.cli:main"

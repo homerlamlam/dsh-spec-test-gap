@@ -28,7 +28,7 @@ async function populatedTarget(scratch){
   const target=path.join(scratch,'existing-plugin');
   await mkdir(path.join(target,'dist'),{recursive:true});
   await mkdir(path.join(target,'python'));
-  await writeFile(path.join(target,'package.json'),JSON.stringify({name:'@specgap/dsh-plugin'}));
+  await writeFile(path.join(target,'package.json'),JSON.stringify({name:'dsh-spec-test-gap'}));
   await writeFile(path.join(target,'dist/sentinel.txt'),'must not delete or overwrite');
   const held=path.join(scratch,'held-core');await mkdir(held);await writeFile(path.join(held,'sentinel.py'),'# must remain unchanged');
   // Disposable tripwire: the old builder stops here AFTER deleting dist,
@@ -52,7 +52,7 @@ test('custom build rejects populated matching-name output without mutation',asyn
 });
 test('custom build rejects an ordinary populated matching-name tree without mutation',async t=>{
   const scratch=await fixture(t),target=path.join(scratch,'unowned');await mkdir(target);
-  await writeFile(path.join(target,'package.json'),JSON.stringify({name:'@specgap/dsh-plugin'}));
+  await writeFile(path.join(target,'package.json'),JSON.stringify({name:'dsh-spec-test-gap'}));
   await writeFile(path.join(target,'sentinel.txt'),'not owned');const before=await snapshot(scratch);
   await assert.rejects(buildPackage(target),/unowned populated build directory/);
   assert.deepEqual(await snapshot(scratch),before);
@@ -84,7 +84,7 @@ test('custom build does not retain ownership when its output directory is replac
 test('preflight rejects an outside ancestor alias into a synthetic checkout without mutation',async t=>{
   const scratch=await fixture(t),checkout=path.join(scratch,'checkout'),sourceRoot=path.join(checkout,'plugins','plugin');
   await mkdir(path.join(sourceRoot,'dist'),{recursive:true});await writeFile(path.join(sourceRoot,'dist/sentinel.txt'),'shared fixture, not actual checkout');
-  await writeFile(path.join(sourceRoot,'package.json'),JSON.stringify({name:'@specgap/dsh-plugin'}));
+  await writeFile(path.join(sourceRoot,'package.json'),JSON.stringify({name:'dsh-spec-test-gap'}));
   const alias=path.join(scratch,'stage-alias');await symlink(path.join(checkout,'plugins'),alias,'junction');
   const before=await snapshot(scratch);
   await assert.rejects(prepareBuildRoot(path.join(alias,'plugin'),sourceRoot),/linked build directory/);

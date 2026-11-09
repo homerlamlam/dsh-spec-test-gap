@@ -33,7 +33,7 @@ test('isolated build writes the selected distribution and removes stale generate
 });
 test('valid copied distribution exposes only native entrypoints and identical core',async t=>{
   const result=check(await fixture(t));assert.equal(result.status,0,result.stderr);
-  const evidence=JSON.parse(result.stdout);assert.equal(evidence.version,'0.2.0-alpha.4');assert.equal(evidence.core.length,14);
+  const evidence=JSON.parse(result.stdout);assert.equal(evidence.version,'0.2.0-alpha.5');assert.equal(evidence.core.length,14);
 });
 for(const [label,file,change,message] of [
   ['core byte drift','python/specgap/__init__.py',s=>s+'\n# drift\n',/core hash/],

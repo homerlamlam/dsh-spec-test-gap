@@ -1,4 +1,4 @@
-# 0.2.0-alpha.4 公开发布验证
+# 0.2.0-alpha.5 公开发布验证
 
 本页仅记录 **2026-11-09** 在本次干净公开副本上的实际验证，不继承旧开发记录的通过数量。
 
@@ -8,12 +8,14 @@
 
 | 验证 | 本次结果 |
 | --- | --- |
-| Python 核心测试 | **90 通过，0 失败，0 跳过**；88.783 秒 |
-| Python bridge/operations/packaging 测试 | **25 通过，0 失败，0 跳过**；64.000 秒 |
-| Node Host/Client/原生模块测试 | **430 通过，0 失败，0 跳过，0 取消**；156.072 秒 |
+| Python 核心测试 | **91 通过，0 失败，0 跳过**；136.282 秒 |
+| Python bridge/operations/packaging 测试 | **25 通过，0 失败，0 跳过**；118.266 秒 |
+| Node Host/Client/原生模块测试 | **431 通过，0 失败，0 跳过，0 取消**；222.243 秒 |
 | 原生插件构建 | 成功；使用锁定依赖，未修改宿主运行时 |
 
-测试使用隔离 Git 夹具与假提供方，包括真实 DSH 原生模块契约，但不调用真实模型。命令及检查口径见[复现指南](<dsh-plugin-verification.md>)。
+合计 **547 项本地测试通过**。测试使用隔离 Git 夹具与假提供方，包括真实 DSH 原生模块契约，但不调用真实模型。命令及检查口径见[复现指南](<dsh-plugin-verification.md>)。
+
+本版还修复了实际 Windows CI 暴露的路径边界问题：临时目录的 8.3 短路径别名与仓库的规范长路径比较时可能漏判仓库内输出。新增回归在修改前失败；在拒绝符号链接/reparse point 后统一规范路径，回归及完整测试通过。这不构成操作系统沙箱或并发路径替换防护。
 
 ## 独立安装包验收
 
@@ -21,15 +23,15 @@
 
 | 产物 | 结果 |
 | --- | --- |
-| 安装包 | `specgap-dsh-plugin-0.2.0-alpha.4.tgz` |
-| 大小 | 130,099 字节 |
-| SHA-256 | `aca2ebefcd8353f15f5dd9f36adc683193c4b8373c39b7fbcf587d7d92d89b48` |
+| 安装包 | [dsh-spec-test-gap-0.2.0-alpha.5.tgz](https://github.com/homerlamlam/dsh-spec-test-gap/releases/download/plugin-v0.2.0-alpha.5/dsh-spec-test-gap-0.2.0-alpha.5.tgz) |
+| 大小 | 131,189 字节 |
+| SHA-256 | `93842cf37cdd977abeb50af67afcf7958d0ecd80894928f9c24a1d8499a89146` |
 
 Release 仅提供安装包与校验清单；本次没有 npm/PyPI 发布。源文件和包内文本的最终扫描没有发现真实密钥或本机私有路径；测试中的 `example.com` 假凭据已逐项核对，不是生产凭据。
 
 ## 界面图片
 
-功能展示采用实际生产组件的独立浏览器夹具，详见[截图说明](<screenshots.md>)。不把离线组件截图记作已登录原生 DSH 的完整端到端验收。
+四张功能截图使用本版实际生产组件与样式重新捕获；独立 Chrome 夹具的 **19 项交互断言通过**，浏览器控制台 **0 错误、0 警告**。检查涵盖搜索、双向映射、原文高亮、定位、关闭后焦点恢复与键盘切换；仅请求本地静态资源，没有 Host/模型请求。详见[截图说明](<screenshots.md>)。不把离线组件截图记作已登录原生 DSH 的完整端到端验收。
 
 ## 发布范围与保密处理
 
@@ -45,4 +47,4 @@ Release 仅提供安装包与校验清单；本次没有 npm/PyPI 发布。源�
 - 所有平台/浏览器组合；本次本地测试不能代表 Linux/Python 3.11。
 - 操作系统沙箱、企业身份认证、抵抗本机管理员篡改或自动发布批准。
 
-GitHub Actions 配置覆盖 Ubuntu/Windows × Python 3.11/3.13 的 **CLI/core wheel** 构建、安装、测试与样例；不覆盖插件原生集成。最新实际运行状态请查看 [Actions](https://github.com/homerlamlam/specgap/actions)，不把配置文件本身算成一次通过。
+GitHub Actions 配置覆盖 Ubuntu/Windows × Python 3.11/3.13 的 **CLI/core wheel** 构建、安装、测试与样例；不覆盖插件原生集成。最新实际运行状态请查看 [Actions](https://github.com/homerlamlam/dsh-spec-test-gap/actions)，不把配置文件本身算成一次通过。

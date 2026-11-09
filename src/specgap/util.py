@@ -85,7 +85,9 @@ def safe_path(path) -> Path:
             continue
         if stat.S_ISLNK(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
             raise SpecGapError("Symlink or reparse-point artifact path is not allowed")
-    return path
+    # Expand Windows 8.3 aliases only after rejecting reparse points; containment
+    # checks must compare canonical paths even when the destination is not created.
+    return path.resolve()
 
 
 def read_bytes(path, max_bytes=MAX_ARTIFACT_BYTES) -> bytes:
