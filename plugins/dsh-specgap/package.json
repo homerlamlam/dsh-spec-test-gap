@@ -1,0 +1,20 @@
+{
+  "name": "@specgap/dsh-plugin",
+  "version": "0.2.0-alpha.4",
+  "description": "原生需求对照工作台，支持中文审查与报告",
+  "license": "MIT",
+  "repository": {"type": "git", "url": "git+https://github.com/homerlamlam/specgap.git", "directory": "plugins/dsh-specgap"},
+  "homepage": "https://github.com/homerlamlam/specgap#readme",
+  "bugs": {"url": "https://github.com/homerlamlam/specgap/issues"},
+  "type": "module",
+  "engines": {"node": ">=24.9.0", "dsh": "0.2.2-rc.1"},
+  "exports": {".": "./dist/host/index.mjs", "./client": "./dist/client.js", "./locale/*.json": "./locale/*.json", "./icon": "./icon.svg"},
+  "files": ["dist", "python/bridge.py", "python/operations.py", "python/specgap/**/*.py", "locale/*.json", "icon.svg", "cordis.patch.yml", "LICENSE", "README.md", "docs/*.md"],
+  "scripts": {"build": "node scripts/build.mjs", "test": "node --test tests/*.test.mjs", "check-package": "node scripts/check-package.mjs",
+    "accept-package": "node scripts/accept-package.mjs"},
+  "devDependencies": {"esbuild": "0.28.2"},
+  "dsh": {
+    "bundle": {"patch": "./cordis.patch.yml"},
+    "client": {"platform": "web", "immediately": true, "inject": ["@deepseek-ai/dsh-client-ui-layout", "@deepseek-ai/dsh-client-ui-sidebar", "@deepseek-ai/dsh-client-locale", "@deepseek-ai/dsh-client-ui-sidebar-right", "@deepseek-ai/dsh-client-ui-workspace"]}
+  }
+}

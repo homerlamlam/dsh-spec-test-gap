@@ -1,0 +1,8 @@
+{
+  "actors": {
+    "dev": ["developer"],
+    "pm": ["product"],
+    "qa": ["qa"],
+    "sec": ["security"]
+  }
+}

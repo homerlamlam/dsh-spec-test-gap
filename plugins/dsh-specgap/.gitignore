@@ -1,0 +1,6 @@
+# Build-generated copies; originals live in the root Python project.
+/python/specgap/
+/locale/en.json
+/locale/zh.json
+/*.tgz
+/docs/

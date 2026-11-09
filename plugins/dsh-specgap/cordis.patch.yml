@@ -1,0 +1,4 @@
+- insert:
+    - id: specgap
+      name: '@specgap/dsh-plugin'
+      config: {}
