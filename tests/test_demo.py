@@ -23,7 +23,8 @@ class DemoTests(unittest.TestCase):
         with patch('specgap.provider.urllib.request.build_opener') as opener:
             run = create_demo(self.out)
             opener.assert_not_called()
-        self.assertEqual(run, self.out / 'run')
+        # The returned path is canonical even when TEMP uses a Windows 8.3 alias.
+        self.assertEqual(run, (self.out / 'run').resolve())
         bundle = load_run(run)
         self.assertEqual(len(bundle['requirements']['clauses']), 3)
         self.assertTrue(any(s['path'] == 'helpers.py' and s['side'] == 'head' for s in bundle['sources']))
